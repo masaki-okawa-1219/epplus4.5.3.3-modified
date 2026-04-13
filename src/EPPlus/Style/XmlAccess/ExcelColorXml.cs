@@ -162,6 +162,14 @@ namespace OfficeOpenXml.Style.XmlAccess
                 _exists = true;
             }
         }
+        internal bool HasIndexed
+        {
+            get
+            {
+                return _indexed != int.MinValue;
+            }
+        }
+
         internal void Clear()
         {
             _theme = "";

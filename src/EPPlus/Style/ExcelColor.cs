@@ -174,6 +174,64 @@ namespace OfficeOpenXml.Style
         {
             return LookupColor(this);
         }
+
+#if true
+        public string LookupColor (ExcelColor theColor)
+        {
+            // Thanks to neaves for contributing this method.
+            string translatedRGB = "";
+
+            // reference extracted from ECMA-376, Part 4, Section 3.8.26 or 18.8.27 SE Part 1
+            string[] rgbLookup =
+            {
+        "#FF000000", "#FFFFFFFF", "#FFFF0000", "#FF00FF00", "#FF0000FF", "#FFFFFF00", "#FFFF00FF", "#FF00FFFF",
+        "#FF000000", "#FFFFFFFF", "#FFFF0000", "#FF00FF00", "#FF0000FF", "#FFFFFF00", "#FFFF00FF", "#FF00FFFF",
+        "#FF800000", "#FF008000", "#FF000080", "#FF808000", "#FF800080", "#FF008080", "#FFC0C0C0", "#FF808080",
+        "#FF9999FF", "#FF993366", "#FFFFFFCC", "#FFCCFFFF", "#FF660066", "#FFFF8080", "#FF0066CC", "#FFCCCCFF",
+        "#FF000080", "#FFFF00FF", "#FFFFFF00", "#FF00FFFF", "#FF800080", "#FF800000", "#FF008080", "#FF0000FF",
+        "#FF00CCFF", "#FFCCFFFF", "#FFCCFFCC", "#FFFFFF99", "#FF99CCFF", "#FFFF99CC", "#FFCC99FF", "#FFFFCC99",
+        "#FF3366FF", "#FF33CCCC", "#FF99CC00", "#FFFFCC00", "#FFFF9900", "#FFFF6600", "#FF666699", "#FF969696",
+        "#FF003366", "#FF339966", "#FF003300", "#FF333300", "#FF993300", "#FF993366", "#FF333399", "#FF333333",
+    };
+
+            var src = theColor.GetSource ();
+
+            // 1) RGB 明示指定を最優先
+            if (!string.IsNullOrEmpty (src.Rgb))
+            {
+                return "#" + src.Rgb;
+            }
+
+            // 2) Theme 指定があれば indexed より優先（まずは既定テーマで解決）
+            if (!string.IsNullOrEmpty (src.Theme))
+            {
+                int themeIx;
+                if (int.TryParse (src.Theme, out themeIx))
+                {
+                    // Office 既定テーマ近似 (lt1,dk1,lt2,dk2,accent1..6,hlink,folHlink)
+                    string[] defaultTheme =
+                    {
+                "#FFFFFFFF", "#FF000000", "#FFEEECE1", "#FF1F497D",
+                "#FF4F81BD", "#FFC0504D", "#FF9BBB59", "#FF8064A2",
+                "#FF4BACC6", "#FFF79646", "#FF0000FF", "#FF800080"
+            };
+                    if (themeIx >= 0 && themeIx < defaultTheme.Length)
+                    {
+                        return defaultTheme[themeIx];
+                    }
+                }
+            }
+
+            // 3) indexed は明示設定時のみ使用
+            if (src.HasIndexed && src.Indexed >= 0 && src.Indexed < rgbLookup.Length)
+            {
+                return rgbLookup[src.Indexed];
+            }
+
+            // 4) 最後のフォールバック
+            return "#FF000000";
+        }
+#else
         /// <summary>
         /// Return the RGB value for the color object that uses the Indexed or Tint property
         /// </summary>
@@ -274,5 +332,6 @@ namespace OfficeOpenXml.Style
 
             return translatedRGB;
         }
+#endif
     }
 }

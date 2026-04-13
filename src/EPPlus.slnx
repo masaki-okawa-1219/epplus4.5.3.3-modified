@@ -1,0 +1,10 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="Release" />
+    <BuildType Name="Release 4.0" />
+  </Configurations>
+  <Project Path="EPPlus/EPPlus.MultiTarget.csproj">
+    <BuildType Solution="Release 4.0|*" Project="Release" />
+  </Project>
+</Solution>

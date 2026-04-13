@@ -827,5 +827,52 @@ namespace OfficeOpenXml.Drawing
                 SetPixelWidth(_width);
             }
         }
+
+        const string TransformRotationPath = "xdr:sp/xdr:spPr/a:xfrm/@rot";
+        const string TransformFlipHPath = "xdr:sp/xdr:spPr/a:xfrm/@flipH";
+        const string TransformFlipVPath = "xdr:sp/xdr:spPr/a:xfrm/@flipV";
+
+        /// <summary>
+        /// Shape rotation in degrees. Open XML stores this as 1/60000 degree units.
+        /// </summary>
+        public double Rotation
+        {
+            get
+            {
+                var raw = GetXmlNodeString (TransformRotationPath);
+                if (string.IsNullOrEmpty (raw))
+                    return 0d;
+
+                int rot;
+                if (int.TryParse (raw, NumberStyles.Integer, CultureInfo.InvariantCulture, out rot))
+                {
+                    return rot / 60000d;
+                }
+                return 0d;
+            }
+            set
+            {
+                var rot = (int)Math.Round (value * 60000d, MidpointRounding.AwayFromZero);
+                SetXmlNodeString (TransformRotationPath, rot.ToString (CultureInfo.InvariantCulture));
+            }
+        }
+
+        /// <summary>
+        /// Flip shape horizontally.
+        /// </summary>
+        public bool FlipHorizontal
+        {
+            get { return GetXmlNodeBool (TransformFlipHPath, false); }
+            set { SetXmlNodeBool (TransformFlipHPath, value); }
+        }
+
+        /// <summary>
+        /// Flip shape vertically.
+        /// </summary>
+        public bool FlipVertical
+        {
+            get { return GetXmlNodeBool (TransformFlipVPath, false); }
+            set { SetXmlNodeBool (TransformFlipVPath, value); }
+        }
     }
 }

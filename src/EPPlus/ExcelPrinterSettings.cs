@@ -676,10 +676,17 @@ namespace OfficeOpenXml
                 {
                     return _ws.Names["_xlnm.Print_Area"];
                 }
-                else
+
+                if (_ws.Workbook.Names.ContainsKey ("_xlnm.Print_Area"))
                 {
-                    return null;
+                    var named = _ws.Workbook.Names["_xlnm.Print_Area"];
+                    if (named != null && named.Worksheet == _ws)
+                    {
+                        return named;
+                    }
                 }
+
+                return null;
             }
             set
             {

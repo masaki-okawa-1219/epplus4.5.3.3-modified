@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;net8.0-windows</TargetFrameworks>
+    <TargetFrameworks>net40;net8.0-windows;net10.0-windows</TargetFrameworks>
     <AssemblyVersion>4.5.3.3</AssemblyVersion>
     <FileVersion>4.5.3.3</FileVersion>
     <Version>4.5.3.3</Version>
@@ -9,17 +9,24 @@
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/JanKallman/EPPlus</PackageProjectUrl>
     <Authors>Jan Källman</Authors>
-    <Company></Company>
-    <Product>EPPlus</Product>
-    <Description>Create advanced Excel spreadsheets using .NET</Description>
+    <AssemblyTitle>EPPlus (Modified)</AssemblyTitle>
+    <Company>Jan Källman / Modified build</Company>
+    <Product>EPPlus (Modified)</Product>
+    <Description>Create advanced Excel spreadsheets using .NET. This build contains local modifications based on EPPlus 4.5.3.3.</Description>
     <AssemblyName>EPPlus</AssemblyName>
     <RootNamespace>EPPlus</RootNamespace>
-    <RepositoryUrl></RepositoryUrl>
+    <RepositoryUrl>https://github.com/masaki-okawa-1219/epplus4.5.3.3-modified</RepositoryUrl>
     <PackageTags>Excel ooxml</PackageTags>
-    <Copyright>Jan Källman 2020</Copyright>
+    <InformationalVersion>4.5.3.3+modified</InformationalVersion>
+    <Copyright>Jan Källman 2020; local modifications included</Copyright>
     <UseWindowsForms>true</UseWindowsForms>
     <PackageReleaseNotes>
       # EPPlus 4.5.3.3
+
+      ## Local modification notice
+      This build contains local modifications based on EPPlus 4.5.3.3.
+      Original author: Jan Källman
+      License: LGPL-3.0
 
       ## Announcement: This is the last version of EPPlus under the LGPL License
       EPPlus will from version 5 be licensed under the [Polyform Noncommercial 1.0.0]( https://polyformproject.org/licenses/noncommercial/1.0.0/) license.
@@ -246,8 +253,12 @@ Release Candidate changes
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.1'">
     <DefineConstants>Core</DefineConstants>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net8.0-windows'">
+    <DefineConstants>Core</DefineConstants>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net10.0-windows'">
     <DefineConstants>Core</DefineConstants>
   </PropertyGroup>
 
@@ -329,15 +340,32 @@ Release Candidate changes
     <None Update="readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="NOTICE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="lgpl-3.0.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+    <PackageReference Include="Microsoft.Extensions.Configuration">
+      <Version>9.0.10</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions">
+      <Version>9.0.10</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json">
+      <Version>9.0.10</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0-windows'">
     <PackageReference Include="Microsoft.Extensions.Configuration">
       <Version>9.0.10</Version>
     </PackageReference>

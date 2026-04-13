@@ -75,6 +75,8 @@ namespace OfficeOpenXml
         {
             get
             {
+                if (PositionID < 0)
+                    return _list[0];
                 return _list[PositionID];
             }
         }

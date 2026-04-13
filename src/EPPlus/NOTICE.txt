@@ -1,0 +1,19 @@
+NOTICE FOR MODIFIED EPPLUS DISTRIBUTION
+
+This distribution contains a modified build of EPPlus 4.5.3.3.
+
+Original project:
+- EPPlus
+- Original author: Jan K?llman
+- Original project URL: https://github.com/JanKallman/EPPlus
+
+Modification notice:
+- This distribution includes local modifications.
+- Product name in this distribution: EPPlus (Modified)
+
+Source code for the modified version:
+- https://github.com/masaki-okawa-1219/epplus4.5.3.3-modified.git
+
+License notice:
+- This distribution is accompanied by lgpl-3.0.txt.
+- Please refer to the included license text for the applicable license terms.
