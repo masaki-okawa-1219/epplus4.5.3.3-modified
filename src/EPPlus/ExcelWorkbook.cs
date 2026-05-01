@@ -407,7 +407,7 @@ namespace OfficeOpenXml
                 }
                 else
                 {
-                    return Convert.ToDecimal(font[min].Height + (font[max].Height - font[min].Height) * ((fontSize - min) / (max - min)));
+                    return Convert.ToDecimal(font[min].Width + (font[max].Width - font[min].Width) * ((fontSize - min) / (max - min)));
                 }
             }
         }

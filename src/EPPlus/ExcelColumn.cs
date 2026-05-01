@@ -174,6 +174,12 @@ namespace OfficeOpenXml
                 }
             }
 		}
+        public int GetPixelWidth()
+        {
+            var mdw = _worksheet.Workbook.MaxFontWidth;
+            var width = (decimal)VisualWidth;
+            return (int)decimal.Truncate(((256 * width + decimal.Truncate(128 / mdw)) / 256) * mdw);
+        }
         /// <summary>
         /// If set to true a column automaticlly resize(grow wider) when a user inputs numbers in a cell. 
         /// </summary>

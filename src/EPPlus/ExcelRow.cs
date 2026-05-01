@@ -185,7 +185,18 @@ namespace OfficeOpenXml
                 r.CustomHeight = value;
             }
         }
-		#endregion
+
+        public int GetPixelHeight()
+        {
+            if (Hidden || (Collapsed && OutlineLevel > 0))
+            {
+                return 0;
+            }
+
+            return (int)(Height / 0.75 + .5);
+        }
+
+ 		#endregion
 
         internal string _styleName = "";
         /// <summary>

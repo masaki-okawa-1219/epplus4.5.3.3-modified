@@ -190,6 +190,10 @@ namespace OfficeOpenXml.Drawing
 
         bool _doNotAdjust = false;
         bool _initGetPosSize;
+        const string absoluteXPath = "xdr:pos/@x";
+        const string absoluteYPath = "xdr:pos/@y";
+        const string extentCXPath = "xdr:ext/@cx";
+        const string extentCYPath = "xdr:ext/@cy";
 
         internal ExcelDrawing(ExcelDrawings drawings, XmlNode node, string nameXPath, bool getPosSize = false) :
             base(drawings.NameSpaceManager, node)
@@ -198,18 +202,14 @@ namespace OfficeOpenXml.Drawing
             _topNode = node;
             _id = drawings.Worksheet.Workbook._nextDrawingID++;
             XmlNode posNode = node.SelectSingleNode("xdr:from", drawings.NameSpaceManager);
-            if (node != null)
+            if (posNode != null)
             {
                 From = new ExcelPosition(drawings.NameSpaceManager, posNode, GetPositionSize);
             }
             posNode = node.SelectSingleNode("xdr:to", drawings.NameSpaceManager);
-            if (node != null)
+            if (posNode != null)
             {
                 To = new ExcelPosition(drawings.NameSpaceManager, posNode, GetPositionSize);
-            }
-            else
-            {
-                To = null;
             }
 
             // 読み込んだものは そのままいじらない。
@@ -463,33 +463,73 @@ namespace OfficeOpenXml.Drawing
                     return eTextVerticalType.Horizontal;
             }
         }
-        #region "Internal sizing functions"
-        internal int GetPixelLeft()
+        public bool IsTwoCellAnchor
+        {
+            get { return TopNode != null && TopNode.LocalName == "twoCellAnchor"; }
+        }
+        public bool IsOneCellAnchor
+        {
+            get { return TopNode != null && TopNode.LocalName == "oneCellAnchor"; }
+        }
+        public bool IsAbsoluteAnchor
+        {
+            get { return TopNode != null && TopNode.LocalName == "absoluteAnchor"; }
+        }
+        private static int EmuToPixel(int emu)
+        {
+            return Convert.ToInt32(Math.Round(Convert.ToDouble(emu) / EMU_PER_PIXEL, 0));
+        }
+        private static int PixelToEmu(int pixels)
+        {
+            return pixels * EMU_PER_PIXEL;
+        }
+        private int GetPixelLeft(int column, int columnOffsetPixels)
         {
             ExcelWorksheet ws = _drawings.Worksheet;
             decimal mdw = ws.Workbook.MaxFontWidth;
 
             int pix = 0;
-            for (int col = 0; col < From.Column; col++)
+            for (int col = 0; col < column; col++)
             {
                 pix += (int)decimal.Truncate(((256 * GetColumnWidth(col + 1) + decimal.Truncate(128 / (decimal)mdw)) / 256) * mdw);
             }
-            pix += From.ColumnOff / EMU_PER_PIXEL;
+            pix += columnOffsetPixels;
             return pix;
+        }
+        private int GetPixelTop(int row, int rowOffsetPixels)
+        {
+            int pix = 0;
+            for (int currentRow = 0; currentRow < row; currentRow++)
+            {
+                pix += (int)(GetRowHeight(currentRow + 1) / 0.75);
+            }
+            pix += rowOffsetPixels;
+            return pix;
+        }
+        #region "Internal sizing functions"
+        internal int GetPixelLeft()
+        {
+            if (IsAbsoluteAnchor)
+            {
+                return EmuToPixel(GetXmlNodeInt(absoluteXPath));
+            }
+            return GetPixelLeft(From.Column, From.ColumnOff / EMU_PER_PIXEL);
         }
         internal int GetPixelTop()
         {
-            ExcelWorksheet ws = _drawings.Worksheet;
-            int pix = 0;
-            for (int row = 0; row < From.Row; row++)
+            if (IsAbsoluteAnchor)
             {
-                pix += (int)(GetRowHeight(row + 1) / 0.75);
+                return EmuToPixel(GetXmlNodeInt(absoluteYPath));
             }
-            pix += From.RowOff / EMU_PER_PIXEL;
-            return pix;
+            return GetPixelTop(From.Row, From.RowOff / EMU_PER_PIXEL);
         }
-        internal int GetPixelWidth()
+        public int GetPixelWidth()
         {
+            if (IsOneCellAnchor || IsAbsoluteAnchor)
+            {
+                return EmuToPixel(GetXmlNodeInt(extentCXPath));
+            }
+
             ExcelWorksheet ws = _drawings.Worksheet;
             decimal mdw = ws.Workbook.MaxFontWidth;
 
@@ -501,9 +541,12 @@ namespace OfficeOpenXml.Drawing
             pix += Convert.ToInt32(Math.Round(Convert.ToDouble(To.ColumnOff) / EMU_PER_PIXEL,0));
             return pix;
         }
-        internal int GetPixelHeight()
+        public int GetPixelHeight()
         {
-            ExcelWorksheet ws = _drawings.Worksheet;
+            if (IsOneCellAnchor || IsAbsoluteAnchor)
+            {
+                return EmuToPixel(GetXmlNodeInt(extentCYPath));
+            }
 
             int pix = -(From.RowOff / EMU_PER_PIXEL);
             for (int row = From.Row + 1; row <= To.Row; row++)
@@ -581,6 +624,13 @@ namespace OfficeOpenXml.Drawing
 
         internal void SetPixelTop(int pixels)
         {
+            if (IsAbsoluteAnchor)
+            {
+                SetXmlNodeString(absoluteYPath, PixelToEmu(pixels).ToString(CultureInfo.InvariantCulture));
+                _top = pixels;
+                return;
+            }
+
             _doNotAdjust = true;
             ExcelWorksheet ws = _drawings.Worksheet;
             decimal mdw = ws.Workbook.MaxFontWidth;
@@ -608,6 +658,13 @@ namespace OfficeOpenXml.Drawing
         }
         internal void SetPixelLeft(int pixels)
         {
+            if (IsAbsoluteAnchor)
+            {
+                SetXmlNodeString(absoluteXPath, PixelToEmu(pixels).ToString(CultureInfo.InvariantCulture));
+                _left = pixels;
+                return;
+            }
+
             _doNotAdjust = true;
             ExcelWorksheet ws = _drawings.Worksheet;
             decimal mdw = ws.Workbook.MaxFontWidth;
@@ -643,6 +700,13 @@ namespace OfficeOpenXml.Drawing
             ExcelWorksheet ws = _drawings.Worksheet;
             //decimal mdw = ws.Workbook.MaxFontWidth;
             pixels = (int)(pixels / (dpi / STANDARD_DPI) + .5);
+            if (IsOneCellAnchor || IsAbsoluteAnchor)
+            {
+                SetXmlNodeString(extentCYPath, PixelToEmu(pixels).ToString(CultureInfo.InvariantCulture));
+                _height = pixels;
+                _doNotAdjust = false;
+                return;
+            }
             int pixOff = pixels - ((int)(GetRowHeight(From.Row + 1) / 0.75) - (int)(From.RowOff / EMU_PER_PIXEL));
             int prevPixOff = pixels;
             int row = From.Row + 1;
@@ -674,6 +738,13 @@ namespace OfficeOpenXml.Drawing
             decimal mdw = ws.Workbook.MaxFontWidth;
 
             pixels = (int)(pixels / (dpi / STANDARD_DPI) + .5);
+            if (IsOneCellAnchor || IsAbsoluteAnchor)
+            {
+                SetXmlNodeString(extentCXPath, PixelToEmu(pixels).ToString(CultureInfo.InvariantCulture));
+                _width = pixels;
+                _doNotAdjust = false;
+                return;
+            }
             int pixOff = (int)pixels - ((int)decimal.Truncate(((256 * GetColumnWidth(From.Column + 1) + decimal.Truncate(128 / (decimal)mdw)) / 256) * mdw) - From.ColumnOff / EMU_PER_PIXEL);
             int prevPixOff = From.ColumnOff / EMU_PER_PIXEL + (int)pixels;
             int col = From.Column + 2;
@@ -738,10 +809,18 @@ namespace OfficeOpenXml.Drawing
                 _height = GetPixelHeight();
             }
 
-            From.Row = Row;
-            From.RowOff = RowOffsetPixels * EMU_PER_PIXEL;
-            From.Column = Column;
-            From.ColumnOff = ColumnOffsetPixels * EMU_PER_PIXEL;
+            if (IsAbsoluteAnchor)
+            {
+                SetPixelTop(GetPixelTop(Row, RowOffsetPixels));
+                SetPixelLeft(GetPixelLeft(Column, ColumnOffsetPixels));
+            }
+            else
+            {
+                From.Row = Row;
+                From.RowOff = RowOffsetPixels * EMU_PER_PIXEL;
+                From.Column = Column;
+                From.ColumnOff = ColumnOffsetPixels * EMU_PER_PIXEL;
+            }
 
             SetPixelWidth(_width);
             SetPixelHeight(_height);

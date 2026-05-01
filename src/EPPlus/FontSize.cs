@@ -231,6 +231,10 @@ namespace OfficeOpenXml
             {"Segoe Marker",new Dictionary<float,FontSizeInfo>(){{6,new FontSizeInfo(20,5)},{8,new FontSizeInfo(20,5)},{10,new FontSizeInfo(20,6)},{11,new FontSizeInfo(20,6)},{12,new FontSizeInfo(21,7)},{14,new FontSizeInfo(24,8)},{16,new FontSizeInfo(27,9)},{18,new FontSizeInfo(31,10)},{20,new FontSizeInfo(34,12)},{22,new FontSizeInfo(37,12)},{24,new FontSizeInfo(41,14)},{26,new FontSizeInfo(44,15)},{28,new FontSizeInfo(47,16)},{36,new FontSizeInfo(60,20)},{48,new FontSizeInfo(80,27)},{72,new FontSizeInfo(0,41)},{96,new FontSizeInfo(159,55)},{128,new FontSizeInfo(212,73)},{256,new FontSizeInfo(422,146)}}},
             {"SketchFlow Print",new Dictionary<float,FontSizeInfo>(){{6,new FontSizeInfo(20,5)},{8,new FontSizeInfo(20,8)},{10,new FontSizeInfo(20,10)},{11,new FontSizeInfo(20,11)},{12,new FontSizeInfo(21,12)},{14,new FontSizeInfo(25,14)},{16,new FontSizeInfo(28,15)},{18,new FontSizeInfo(31,17)},{20,new FontSizeInfo(35,20)},{22,new FontSizeInfo(38,21)},{24,new FontSizeInfo(41,23)},{26,new FontSizeInfo(45,25)},{28,new FontSizeInfo(48,27)},{36,new FontSizeInfo(61,35)},{48,new FontSizeInfo(81,47)},{72,new FontSizeInfo(0,70)},{96,new FontSizeInfo(161,93)},{128,new FontSizeInfo(215,124)},{256,new FontSizeInfo(427,248)}}},
             {"Microsoft MHei",new Dictionary<float,FontSizeInfo>(){{6,new FontSizeInfo(20,5)},{8,new FontSizeInfo(20,6)},{10,new FontSizeInfo(20,7)},{11,new FontSizeInfo(22,8)},{12,new FontSizeInfo(23,9)},{14,new FontSizeInfo(29,10)},{16,new FontSizeInfo(31,12)},{18,new FontSizeInfo(35,13)},{20,new FontSizeInfo(39,15)},{22,new FontSizeInfo(41,16)},{24,new FontSizeInfo(47,18)},{26,new FontSizeInfo(51,19)},{28,new FontSizeInfo(53,20)},{36,new FontSizeInfo(69,26)},{48,new FontSizeInfo(91,35)},{72,new FontSizeInfo(0,53)},{96,new FontSizeInfo(181,70)},{128,new FontSizeInfo(243,94)},{256,new FontSizeInfo(482,187)}}},
+            {"MS PGothic",new Dictionary<float,FontSizeInfo>(){{6,new FontSizeInfo(20,5)},{8,new FontSizeInfo(20,6)},{10,new FontSizeInfo(20,7)},{11,new FontSizeInfo(22,8)},{12,new FontSizeInfo(23,9)},{14,new FontSizeInfo(29,11)},{16,new FontSizeInfo(31,12)},{18,new FontSizeInfo(35,13)},{20,new FontSizeInfo(39,15)},{22,new FontSizeInfo(41,16)},{24,new FontSizeInfo(47,18)},{26,new FontSizeInfo(51,20)},{28,new FontSizeInfo(53,21)},{36,new FontSizeInfo(69,27)},{48,new FontSizeInfo(91,36)},{72,new FontSizeInfo(0,54)},{96,new FontSizeInfo(181,72)},{128,new FontSizeInfo(243,96)},{256,new FontSizeInfo(482,191)}}},
+            
+            {"ＭＳ Ｐゴシック",new Dictionary<float,FontSizeInfo>(){{6,new FontSizeInfo(20,5)},{8,new FontSizeInfo(20,6)},{10,new FontSizeInfo(20,7)},{11,new FontSizeInfo(22,8)},{12,new FontSizeInfo(23,9)},{14,new FontSizeInfo(29,11)},{16,new FontSizeInfo(31,12)},{18,new FontSizeInfo(35,13)},{20,new FontSizeInfo(39,15)},{22,new FontSizeInfo(41,16)},{24,new FontSizeInfo(47,18)},{26,new FontSizeInfo(51,20)},{28,new FontSizeInfo(53,21)},{36,new FontSizeInfo(69,27)},{48,new FontSizeInfo(91,36)},{72,new FontSizeInfo(0,54)},{96,new FontSizeInfo(181,72)},{128,new FontSizeInfo(243,96)},{256,new FontSizeInfo(482,191)}}},
+
             {"Microsoft NeoGothic",new Dictionary<float,FontSizeInfo>(){{6,new FontSizeInfo(20,5)},{8,new FontSizeInfo(20,6)},{10,new FontSizeInfo(20,7)},{11,new FontSizeInfo(22,8)},{12,new FontSizeInfo(23,9)},{14,new FontSizeInfo(29,11)},{16,new FontSizeInfo(31,12)},{18,new FontSizeInfo(35,13)},{20,new FontSizeInfo(39,15)},{22,new FontSizeInfo(41,16)},{24,new FontSizeInfo(47,18)},{26,new FontSizeInfo(51,20)},{28,new FontSizeInfo(53,21)},{36,new FontSizeInfo(69,27)},{48,new FontSizeInfo(91,36)},{72,new FontSizeInfo(0,54)},{96,new FontSizeInfo(181,72)},{128,new FontSizeInfo(243,96)},{256,new FontSizeInfo(482,191)}}},
             {"Segoe WP Black",new Dictionary<float,FontSizeInfo>(){{6,new FontSizeInfo(20,5)},{8,new FontSizeInfo(20,7)},{10,new FontSizeInfo(20,8)},{11,new FontSizeInfo(22,9)},{12,new FontSizeInfo(23,10)},{14,new FontSizeInfo(29,12)},{16,new FontSizeInfo(31,13)},{18,new FontSizeInfo(35,15)},{20,new FontSizeInfo(39,17)},{22,new FontSizeInfo(41,18)},{24,new FontSizeInfo(47,20)},{26,new FontSizeInfo(51,22)},{28,new FontSizeInfo(53,23)},{36,new FontSizeInfo(69,30)},{48,new FontSizeInfo(91,40)},{72,new FontSizeInfo(0,60)},{96,new FontSizeInfo(181,79)},{128,new FontSizeInfo(243,106)},{256,new FontSizeInfo(482,212)}}},
             {"Segoe WP",new Dictionary<float,FontSizeInfo>(){{6,new FontSizeInfo(20,5)},{8,new FontSizeInfo(20,6)},{10,new FontSizeInfo(20,7)},{11,new FontSizeInfo(22,8)},{12,new FontSizeInfo(23,9)},{14,new FontSizeInfo(27,11)},{16,new FontSizeInfo(34,12)},{18,new FontSizeInfo(35,13)},{20,new FontSizeInfo(41,15)},{22,new FontSizeInfo(44,16)},{24,new FontSizeInfo(50,18)},{26,new FontSizeInfo(51,20)},{28,new FontSizeInfo(54,21)},{36,new FontSizeInfo(70,27)},{48,new FontSizeInfo(92,36)},{72,new FontSizeInfo(0,54)},{96,new FontSizeInfo(180,72)},{128,new FontSizeInfo(241,96)},{256,new FontSizeInfo(482,191)}}},
@@ -238,5 +242,47 @@ namespace OfficeOpenXml
             {"Segoe WP Light",new Dictionary<float,FontSizeInfo>(){{6,new FontSizeInfo(20,5)},{8,new FontSizeInfo(20,6)},{10,new FontSizeInfo(20,7)},{11,new FontSizeInfo(22,8)},{12,new FontSizeInfo(23,8)},{14,new FontSizeInfo(27,10)},{16,new FontSizeInfo(34,11)},{18,new FontSizeInfo(35,13)},{20,new FontSizeInfo(41,14)},{22,new FontSizeInfo(44,15)},{24,new FontSizeInfo(50,17)},{26,new FontSizeInfo(51,19)},{28,new FontSizeInfo(54,20)},{36,new FontSizeInfo(70,25)},{48,new FontSizeInfo(92,34)},{72,new FontSizeInfo(0,51)},{96,new FontSizeInfo(180,68)},{128,new FontSizeInfo(241,91)},{256,new FontSizeInfo(482,181)}}},
             {"Segoe WP SemiLight",new Dictionary<float,FontSizeInfo>(){{6,new FontSizeInfo(20,5)},{8,new FontSizeInfo(20,6)},{10,new FontSizeInfo(20,7)},{11,new FontSizeInfo(22,8)},{12,new FontSizeInfo(23,9)},{14,new FontSizeInfo(27,10)},{16,new FontSizeInfo(34,12)},{18,new FontSizeInfo(35,13)},{20,new FontSizeInfo(41,15)},{22,new FontSizeInfo(44,16)},{24,new FontSizeInfo(50,18)},{26,new FontSizeInfo(51,19)},{28,new FontSizeInfo(54,20)},{36,new FontSizeInfo(70,26)},{48,new FontSizeInfo(92,35)},{72,new FontSizeInfo(0,53)},{96,new FontSizeInfo(180,70)},{128,new FontSizeInfo(241,94)},{256,new FontSizeInfo(482,187)}}}
         };
+
+        static FontSize()
+        {
+            AddFontAlias("MS Gothic", "MS PGothic");
+            AddFontAlias("ＭＳ ゴシック", "ＭＳ Ｐゴシック");
+            AddFontAlias("MS UI Gothic", "MS PGothic");
+            AddFontAlias("ＭＳ ＵＩ ゴシック", "ＭＳ Ｐゴシック");
+            AddFontAlias("MS Mincho", "MS PGothic");
+            AddFontAlias("ＭＳ 明朝", "ＭＳ Ｐゴシック");
+            AddFontAlias("MS PMincho", "MS PGothic");
+            AddFontAlias("ＭＳ Ｐ明朝", "ＭＳ Ｐゴシック");
+
+            AddFontAlias("Yu Mincho", "MS PMincho");
+            AddFontAlias("游明朝", "ＭＳ Ｐ明朝");
+            AddFontAlias("Yu Mincho Demibold", "MS PMincho");
+            AddFontAlias("游明朝 Demibold", "ＭＳ Ｐ明朝");
+            AddFontAlias("Yu Mincho Light", "MS PMincho");
+            AddFontAlias("游明朝 Light", "ＭＳ Ｐ明朝");
+
+            AddFontAlias("Meiryo", "Yu Gothic UI");
+            AddFontAlias("メイリオ", "Yu Gothic UI");
+            AddFontAlias("Meiryo UI", "Yu Gothic UI");
+            AddFontAlias("メイリオ UI", "Yu Gothic UI");
+
+            AddFontAlias("游ゴシック", "Yu Gothic");
+            AddFontAlias("游ゴシック Light", "Yu Gothic Light");
+            AddFontAlias("游ゴシック Medium", "Yu Gothic Medium");
+            AddFontAlias("游ゴシック UI", "Yu Gothic UI");
+            AddFontAlias("游ゴシック UI Light", "Yu Gothic UI Light");
+            AddFontAlias("游ゴシック UI Semilight", "Yu Gothic UI Semilight");
+            AddFontAlias("游ゴシック UI Semibold", "Yu Gothic UI Semibold");
+        }
+
+        private static void AddFontAlias(string alias, string source)
+        {
+            if (FontHeights.ContainsKey(alias) || FontHeights.ContainsKey(source) == false)
+            {
+                return;
+            }
+
+            FontHeights.Add(alias, FontHeights[source]);
+        }
     }
 }
