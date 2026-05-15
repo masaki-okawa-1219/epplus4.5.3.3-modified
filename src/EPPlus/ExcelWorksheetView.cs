@@ -390,6 +390,20 @@ namespace OfficeOpenXml
             }
         }
         /// <summary>
+        /// Show zero values in cells.
+        /// </summary>
+        public bool ShowZeros
+        {
+            get
+            {
+                return GetXmlNodeBool("@showZeros", true);
+            }
+            set
+            {
+                SetXmlNodeString("@showZeros", value ? "1" : "0");
+            }
+        }
+        /// <summary>
         /// Window zoom magnification for current view representing percent values.
         /// </summary>
         public int ZoomScale

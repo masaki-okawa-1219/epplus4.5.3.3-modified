@@ -578,6 +578,11 @@ namespace OfficeOpenXml
             get { return ""; }
         }
 
+        internal string GetThemeColor(int index)
+        {
+            return _wb.GetThemeColor(index);
+        }
+
         public ExcelNamedStyleXml CreateNamedStyle(string name)
         {
             return CreateNamedStyle(name, null);

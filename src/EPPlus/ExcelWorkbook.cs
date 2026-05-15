@@ -94,6 +94,13 @@ namespace OfficeOpenXml
 		private OfficeProperties _properties;
 
 		private ExcelStyles _styles;
+		private static readonly string[] _defaultThemeColors =
+		{
+			"#FFFFFFFF", "#FF000000", "#FFEEECE1", "#FF1F497D",
+			"#FF4F81BD", "#FFC0504D", "#FF9BBB59", "#FF8064A2",
+			"#FF4BACC6", "#FFF79646", "#FF0000FF", "#FF800080"
+		};
+		private readonly string[] _themeColors = new string[_defaultThemeColors.Length];
 		#endregion
 
 		#region ExcelWorkbook Constructor
@@ -116,6 +123,7 @@ namespace OfficeOpenXml
 			SchemaNodeOrder = new string[] { "fileVersion", "fileSharing", "workbookPr", "workbookProtection", "bookViews", "sheets", "functionGroups", "functionPrototypes", "externalReferences", "definedNames", "calcPr", "oleSize", "customWorkbookViews", "pivotCaches", "smartTagPr", "smartTagTypes", "webPublishing", "fileRecoveryPr", "webPublishObjects", "extLst" };
 		    FullCalcOnLoad = true;  //Full calculation on load by default, for both new workbooks and templates.
 			GetSharedStrings();
+			LoadThemeColors();
 		}
 		#endregion
 
@@ -129,6 +137,100 @@ namespace OfficeOpenXml
         internal FormulaParser _formulaParser = null;
 	    internal FormulaParserManager _parserManager;
         internal CellStore<List<Token>> _formulaTokens;
+		internal string GetThemeColor(int index)
+		{
+			if (index >= 0 && index < _themeColors.Length)
+			{
+				return _themeColors[index];
+			}
+
+			return null;
+		}
+
+		private void LoadThemeColors()
+		{
+			Array.Copy(_defaultThemeColors, _themeColors, _defaultThemeColors.Length);
+
+			foreach (var rel in Part.GetRelationships())
+			{
+				if (rel.RelationshipType == ExcelPackage.schemaRelationships + "/theme")
+				{
+					var themeUri = UriHelper.ResolvePartUri(WorkbookUri, rel.TargetUri);
+					if (_package.Package.PartExists(themeUri))
+					{
+						LoadThemeColorsFromPart(themeUri);
+					}
+					break;
+				}
+			}
+		}
+
+		private void LoadThemeColorsFromPart(Uri themeUri)
+		{
+			var themeXml = _package.GetXmlFromUri(themeUri);
+			var nsm = new XmlNamespaceManager(themeXml.NameTable);
+			nsm.AddNamespace("a", ExcelPackage.schemaDrawings);
+
+			var clrScheme = themeXml.SelectSingleNode("/a:theme/a:themeElements/a:clrScheme", nsm);
+			if (clrScheme == null)
+			{
+				return;
+			}
+
+			var themeNames = new[]
+			{
+				"lt1", "dk1", "lt2", "dk2", "accent1", "accent2",
+				"accent3", "accent4", "accent5", "accent6", "hlink", "folHlink"
+			};
+
+			for (int i = 0; i < themeNames.Length; i++)
+			{
+				var node = clrScheme.SelectSingleNode("a:" + themeNames[i], nsm);
+				var color = GetThemeColorValue(node);
+				if (!string.IsNullOrEmpty(color))
+				{
+					_themeColors[i] = color;
+				}
+			}
+		}
+
+		private static string GetThemeColorValue(XmlNode schemeColorNode)
+		{
+			if (schemeColorNode == null)
+			{
+				return null;
+			}
+
+			var colorNode = schemeColorNode.FirstChild as XmlElement;
+			if (colorNode == null)
+			{
+				return null;
+			}
+
+			var rgb = colorNode.GetAttribute("lastClr");
+			if (string.IsNullOrEmpty(rgb))
+			{
+				rgb = colorNode.GetAttribute("val");
+			}
+
+			if (string.IsNullOrEmpty(rgb))
+			{
+				return null;
+			}
+
+			rgb = rgb.TrimStart('#');
+			if (rgb.Length == 6)
+			{
+				return "#FF" + rgb.ToUpperInvariant();
+			}
+
+			if (rgb.Length == 8)
+			{
+				return "#" + rgb.ToUpperInvariant();
+			}
+
+			return null;
+		}
 		/// <summary>
 		/// Read shared strings to list
 		/// </summary>

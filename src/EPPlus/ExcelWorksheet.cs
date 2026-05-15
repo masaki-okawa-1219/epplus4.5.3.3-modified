@@ -503,6 +503,23 @@ namespace OfficeOpenXml
         }
 
         /// <summary>
+        /// Show zero values in cells for the worksheet view.
+        /// </summary>
+        public bool ShowZeros
+        {
+            get
+            {
+                CheckSheetType();
+                return View.ShowZeros;
+            }
+            set
+            {
+                CheckSheetType();
+                View.ShowZeros = value;
+            }
+        }
+
+        /// <summary>
         /// The worksheet's display name as it appears on the tab
         /// </summary>
         public string Name
